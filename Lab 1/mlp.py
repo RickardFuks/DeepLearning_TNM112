@@ -45,7 +45,7 @@ class MLP:
         # TODO: specify the total number of weights in the model (both weight matrices and bias vectors)
         self.N = 0
         for i in range(len(W)):
-            self.N += np.size(W[i]) + np.size(b[i])
+            self.N += np.size(W[i]) + np.size(b[i]) #calculate numbe rof trainable data by adding weights and biass
 
         print('Number of hidden layers: ', self.hidden_layers)
         print('Number of model weights: ', self.N)
@@ -61,16 +61,16 @@ class MLP:
     
         # Loop through data points
         for i in range(len(x)):
-            a = x[i].reshape(2, 1)
+            a = x[i].reshape(2, 1) #Make column vector
     
             # Hidden layers
             for j in range(self.hidden_layers):
-                z = self.W[j] @ a + self.b[j]
-                a = activation(z, self.activation)
+                z = self.W[j] @ a + self.b[j] #weight sum + bias
+                a = activation(z, self.activation) # use activation and send forward to a
     
             # Output layer
             z = self.W[-1] @ a + self.b[-1] #Last layer
-            a = activation(z.T, "softmax") #Transpose that matrix!
+            a = activation(z.T, "softmax") #Transpose that matrix! softmax makes it %prediction
     
             # Store prediction
             y[i] = a[0]
@@ -86,7 +86,7 @@ class MLP:
         # Hint: For calculating accuracy, use np.argmax to get predicted class
         train_prediction = self.feedforward(self.dataset.x_train)
         train_loss = np.mean((train_prediction - self.dataset.y_train_oh) ** 2)
-        train_acc = np.mean(np.argmax(train_prediction, axis=1) == self.dataset.y_train) * 100
+        train_acc = np.mean(np.argmax(train_prediction, axis=1) == self.dataset.y_train) * 100 #argmax find index of highest value
     
         print("\tTrain loss:     %0.4f" % train_loss)
         print("\tTrain accuracy: %0.2f" % train_acc)
